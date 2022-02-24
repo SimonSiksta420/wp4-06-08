@@ -1,0 +1,20 @@
+{block content}
+
+<a n:href="Edit:create">Napsat nový příspěvek</a>
+
+<h1 n:block="title">Můj blog</h1>
+
+	{foreach $posts as $post}
+	<div class="post">
+		<div class="date">{$post->created_at|date:'F j, Y'}</div>
+
+        <h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
+
+		<div>{$post->content|truncate:256}</div>
+	</div>
+	{/foreach}
+
+{if $user->isLoggedIn()}<a n:href="Edit:create">Vytvořit příspěvek</a>{/if}
+
+
+{/block}

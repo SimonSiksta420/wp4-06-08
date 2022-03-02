@@ -1,8 +1,4 @@
 services:
 	- App\Router\RouterFactory::createRouter
 	- App\Model\PostFacade
-	- App\Model\UserFacade
-	- App\Forms\FormFactory
-	- App\Forms\SignInFormFactory
-	- App\Forms\SignUpFormFactory
-	- App\Router\RouterFactory::createRouter
+	- App\Model\UserFacade 

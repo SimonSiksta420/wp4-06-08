@@ -29,3 +29,6 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 				->insert($data);
 		}
 	}
+
+	$this->userFacade->add("Admin", "admin@ossp.cz", "secret");
+	$this->userFacade->add("DruhyUser", "second@ossp.cz", "heslo");

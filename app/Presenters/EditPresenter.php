@@ -5,11 +5,9 @@ namespace App\Presenters;
 use App\Model\PostFacade;
 use Nette;
 use Nette\Application\UI\Form;
-use stdClass;
 
 final class EditPresenter extends Nette\Application\UI\Presenter
 {
-	private Nette\Database\Explorer $database;
 
 	private PostFacade $facade;
 
@@ -20,11 +18,16 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 
 	protected function createComponentPostForm(): Form
 	{
+
+
 		$form = new Form;
 		$form->addText('title', 'Titulek:')
 			->setRequired();
 		$form->addTextArea('content', 'Obsah:')
 			->setRequired();
+		$form->addUpload('image', 'Soubor')
+			->setRequired()
+			->addRule(Form::IMAGE, 'Thumbnail must be JPEG, PNG or Gif.');
 
 		$form->addSubmit('send', 'Uložit a publikovat');
 		$form->onSuccess[] = [$this, 'postFormSucceeded'];
@@ -35,22 +38,32 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 	public function renderEdit(int $postId): void
 	{
 		$post = $this->facade
-				->getPostById($postId);
+			->getPostById($postId);
 
 
 		$this->getComponent('postForm')
 			->setDefaults($post->toArray());
 	}
 
-	public function postFormSucceeded(array $data): void
+	public function postFormSucceeded($form, $data): void
 	{
 		$postId = $this->getParameter('postId');
 
-		if ($postId) {
-			$post = $this->facade->editPost($postId, $data);
+		if (filesize($data->image) > 0) {
+			if ($data->image->isOk()) {
+				$data->image->move('upload/' . $data->image->getSanitizedName());
+				$data['image'] = ('upload/' . $data->image->getSanitizedName());
+			}
 		} else {
-			$post = $this->facade->insertPost($data);
-		}	
+			$this->flashMessage('Soubor nebyl přidán', 'failed');
+		}
+
+
+		if ($postId) {
+			$post = $this->facade->editPost($postId, (array) $data);
+		} else {
+			$post = $this->facade->insertPost ((array) $data);
+		}
 
 		$this->flashMessage("Příspěvek byl úspěšně publikován.", 'success');
 		$this->redirect('Post:show', $post->id);

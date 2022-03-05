@@ -5,11 +5,9 @@ namespace App\Presenters;
 use App\Model\PostFacade;
 use Nette;
 use Nette\Application\UI\Form;
-use stdClass;
 
 final class PostPresenter extends Nette\Application\UI\Presenter
 {
-	private Nette\Database\Explorer $database;
 
 	private PostFacade $facade;
 

@@ -8,7 +8,11 @@
 
 <br>
 
-<img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+{if $post->image}
+    <img src="{$basePath}/{$post->image}">
+{else}
+    <img src="{$basePath}/upload/no-image.jpg">
+{/if}
 
 <div class="post">{$post->content}</div>
 
@@ -24,7 +28,6 @@
 
 <h4> Zhlédnutí: <div class="views_count">{$post->views_count} </div> </h4>
 
-<br>
 <br>
 
 <h2> Vložte nový Komentář: </h2>

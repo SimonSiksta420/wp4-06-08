@@ -26,7 +26,7 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 		$form->addTextArea('content', 'Obsah:')
 			->setRequired();
 		$form->addUpload('image', 'Soubor')
-			->setRequired()
+		    ->setRequired()
 			->addRule(Form::IMAGE, 'Thumbnail must be JPEG, PNG or Gif.');
 
 		$form->addSubmit('send', 'Uložit a publikovat');

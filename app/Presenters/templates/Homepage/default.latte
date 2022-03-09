@@ -11,7 +11,13 @@
 
         <h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
 
-		<img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+		
+	{if $post->image}
+    	<img src="{$basePath}/{$post->image}">
+	{else}
+    	<img src="{$basePath}/upload/no-image.jpg">
+	{/if}
+
 
 		<div>{$post->content|truncate:256}</div>
 

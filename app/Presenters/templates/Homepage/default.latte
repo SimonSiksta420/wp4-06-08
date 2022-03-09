@@ -16,6 +16,9 @@
 		<div>{$post->content|truncate:256}</div>
 
 	</div>
+
+	<br>
+
 	{/foreach}
 
 {if $user->isLoggedIn()}<a n:href="Edit:create">Vytvořit příspěvek</a>{/if}

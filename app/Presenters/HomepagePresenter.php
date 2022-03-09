@@ -7,7 +7,6 @@ namespace App\Presenters;
 use App\Model\PostFacade;
 use App\Model\UserFacade;
 use Nette;
-use Nette\Application\UI\Form;
 
 final class HomepagePresenter extends Nette\Application\UI\Presenter
 {

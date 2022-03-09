@@ -6,17 +6,32 @@
 
 <h1 n:block="title">{$post->title}</h1>
 
+<br>
+
+<img src="{$basePath}/{$post->image}" alt="Obrázek k článku {$post->title}">
+
 <div class="post">{$post->content}</div>
+
+<br>
 
 <a n:href="Edit:edit $post->id">Upravit příspěvek</a>
 
-<h2>Vložte nový příspěvek</h2>
+<br>
+<br>
+<br>
+
+<h2> Počet zhlédnutí: </h2>
 
 <h4> Zhlédnutí: <div class="views_count">{$post->views_count} </div> </h4>
 
+<br>
+<br>
+
+<h2> Vložte nový Komentář: </h2>
+
 {control commentForm}
 
-<h2>Komentáře</h2>
+<h2> Komentáře: </h2>
 
 <div class="comments">
 	{foreach $comments as $comment}

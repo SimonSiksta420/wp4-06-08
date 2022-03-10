@@ -9,9 +9,9 @@
 <br>
 
 {if $post->image}
-    <img src="{$basePath}/{$post->image}">
+    <img class="img-fluid" src="{$basePath}/{$post->image}">
 {else}
-    <img src="{$basePath}/upload/no-image.jpg">
+    <img class="img-fluid" src="{$basePath}/upload/no-image.jpg">
 {/if}
 
 <div class="post">{$post->content}</div>

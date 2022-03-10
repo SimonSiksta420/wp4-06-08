@@ -55,6 +55,7 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 				$data['image'] = ('upload/' . $data->image->getSanitizedName());
 			}
 		} else {
+			unset($data->image);
 			$this->flashMessage('Soubor nebyl přidán', 'failed');
 		}
 

@@ -26,11 +26,20 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 		$form->addTextArea('content', 'Obsah:')
 			->setRequired();
 		$form->addUpload('image', 'Soubor')
-		    ->setRequired()
+			->setRequired()
 			->addRule(Form::IMAGE, 'Thumbnail must be JPEG, PNG or Gif.');
 
 		$form->addSubmit('send', 'Uložit a publikovat');
 		$form->onSuccess[] = [$this, 'postFormSucceeded'];
+
+		$statuses = [
+			'OPEN' => 'OTEVŘENÝ',
+			'CLOSED' => 'UZAVŘENÝ',
+			'ARCHIVED' => 'ARCHIVOVANÝ'
+		];
+
+		$form->addSelect('status', 'Stav:', $statuses)
+			->setDefaultValue('OPEN');
 
 		return $form;
 	}
@@ -65,7 +74,7 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 		if ($postId) {
 			$post = $this->facade->editPost($postId, (array) $data);
 		} else {
-			$post = $this->facade->insertPost ((array) $data);
+			$post = $this->facade->insertPost((array) $data);
 		}
 
 		$this->flashMessage("Příspěvek byl úspěšně publikován.", 'success');
@@ -81,7 +90,8 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 		}
 	}
 
-	public function handleDeleteImage(int $postId) {
+	public function handleDeleteImage(int $postId)
+	{
 		$data['image'] = null;
 		$this->facade->editPost($postId, $data);
 		$this->flashMessage('Obrázek byl smazán.');

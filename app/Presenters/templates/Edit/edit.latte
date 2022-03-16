@@ -3,4 +3,10 @@
 <h1>Upravit příspěvek</h1>
 
 {control postForm}
+
+{if $post->image == null}
+{php echo "Není dostupný obrázek.A" }
+
+{else}
 <a n:href="deleteImage! $post->id"> Smazat obrázek </a>
+{/if}

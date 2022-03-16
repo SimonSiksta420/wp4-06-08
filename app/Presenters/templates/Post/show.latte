@@ -30,9 +30,13 @@
 
 <br>
 
+{if $post->status == 'OPEN'}
+{elseif $post->status == 'CLOSED' && $user->isloggedIn()}
 <h2> Vložte nový Komentář: </h2>
 
 {control commentForm}
+
+{/if}
 
 <h2> Komentáře: </h2>
 

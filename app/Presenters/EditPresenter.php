@@ -43,6 +43,8 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 
 		$this->getComponent('postForm')
 			->setDefaults($post->toArray());
+
+		$this->template->post = $post;
 	}
 
 	public function postFormSucceeded($form, $data): void
@@ -77,5 +79,12 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 		if (!$this->getUser()->isLoggedIn()) {
 			$this->redirect('Sign:in');
 		}
+	}
+
+	public function handleDeleteImage(int $postId) {
+		$data['image'] = null;
+		$this->facade->editPost($postId, $data);
+		$this->flashMessage('Obrázek byl smazán.');
+		$this->redirect('Post:show', $postId);
 	}
 }

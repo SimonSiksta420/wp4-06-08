@@ -16,6 +16,11 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		$this->facade = $facade;
 	}
 
+	public function actionShow(int $postId): void
+	{
+
+	}
+
 	public function renderShow(int $postId): void
 	{
 		$post = $this->facade

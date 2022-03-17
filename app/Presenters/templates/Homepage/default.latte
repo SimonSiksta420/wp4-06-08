@@ -1,33 +1,28 @@
 {block content}
 
 <a n:href="Edit:create">Napsat nový příspěvek</a>
-
 <h1 n:block="title">Můj blog</h1>
 
 	<div class="row">
 	{foreach $posts as $post}
-	<div class="post col-12 col-md-4 border border-primary rounded-3 pb-3 mb-3 mx-1">
+		{if ($post->status == 'ARCHIVED' && $user->isLoggedIn()) || ($post->status == 'OPEN' || $post->status == 'CLOSED') }
+			<div class="post col-12 col-md-4 border border-primary rounded-3 pb-3 mb-3 mx-1">
+				<div class="date">{$post->created_at|date:'F j, Y'}</div>
+					<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
 
-		<div class="date">{$post->created_at|date:'F j, Y'}</div>
+			{if $post->image}
+    			<img class="img-fluid" src="{$basePath}/{$post->image}">
+			{else}
+    			<img class="img-fluid" src="{$basePath}/upload/no-image.jpg">
+			{/if}
+	
+			<div>{$post->content|truncate:256}</div>
+				</div>
+			<br>
 
-        <h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
-
-		
-	{if $post->image}
-    	<img class="img-fluid" src="{$basePath}/{$post->image}">
-	{else}
-    	<img class="img-fluid" src="{$basePath}/upload/no-image.jpg">
-	{/if}
-
-
-		<div>{$post->content|truncate:256}</div>
-
-	</div>
-
-	<br>
-
+		{/if}
 	{/foreach}
-	</div>
+</div>
 
 {if $user->isLoggedIn()}<a n:href="Edit:create">Vytvořit příspěvek</a>{/if}
 

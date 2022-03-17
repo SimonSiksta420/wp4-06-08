@@ -29,9 +29,6 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 			->setRequired()
 			->addRule(Form::IMAGE, 'Thumbnail must be JPEG, PNG or Gif.');
 
-		$form->addSubmit('send', 'Uložit a publikovat');
-		$form->onSuccess[] = [$this, 'postFormSucceeded'];
-
 		$statuses = [
 			'OPEN' => 'OTEVŘENÝ',
 			'CLOSED' => 'UZAVŘENÝ',
@@ -40,6 +37,10 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 
 		$form->addSelect('status', 'Stav:', $statuses)
 			->setDefaultValue('OPEN');
+
+
+		$form->addSubmit('send', 'Uložit a publikovat');
+		$form->onSuccess[] = [$this, 'postFormSucceeded'];
 
 		return $form;
 	}

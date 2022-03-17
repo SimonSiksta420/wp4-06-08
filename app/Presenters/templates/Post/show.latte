@@ -30,11 +30,17 @@
 
 <br>
 
-{if $post->status == 'OPEN'}
-{elseif $post->status == 'CLOSED' && $user->isloggedIn()}
-<h2> Vložte nový Komentář: </h2>
+{if ($post->status == 'OPEN') || ($post->status == 'CLOSED' && $user->isLoggedIn())}
+
+	<h2> Vložte nový Komentář: </h2>
 
 {control commentForm}
+
+{elseif $post->status == 'ARCHIVED'}
+	<p> Příspěvek je archivován </p>
+
+{else}
+	<p> Přidávání komentářů je zakázáno. </p>
 
 {/if}
 

@@ -1,0 +1,58 @@
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `post_id` int NOT NULL,
+  `name` varchar(250) NOT NULL,
+  `email` varchar(250) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `post_id` (`post_id`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO `comments` (`id`, `post_id`, `name`, `email`, `content`, `created_at`) VALUES
+(3,	10,	'Něco',	'neco@gmail.com',	'něco\n',	'2022-03-16 14:32:26'),
+(4,	10,	'Van Darkholme',	'Gay@gmail.com',	'gay gay',	'2022-03-16 15:14:30');
+
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE `posts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `content` text NOT NULL,
+  `views_count` int NOT NULL DEFAULT '0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` enum('OPEN','CLOSED','ARCHIVED') CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'OPEN',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
+
+INSERT INTO `posts` (`id`, `title`, `image`, `content`, `views_count`, `created_at`, `status`) VALUES
+(6,	'Ronaldo je výborný fotbalista',	'upload/95417.jpeg',	'Je to výborný fotbalista, kopl do míče a ten mě trefil do obličeje, že mi způsobil těžké zranění.',	48,	'2022-03-03 12:05:45',	'ARCHIVED'),
+(7,	'Rules of Nature',	'upload/Raiden.webp',	'You are indeed very, fake and gay.',	4,	'2022-03-09 10:40:16',	'OPEN'),
+(8,	'Mám rád samuraje',	'upload/wp3921884.webp',	'Samurajové jsou pěkní a chtěl bych jejich celý set armoru.',	1,	'2022-03-16 09:25:48',	'OPEN'),
+(9,	'Lídl',	'upload/IMG-5740.webp',	'Martin Lídl se podepisuje na začátku školního roku a snaží se dostat maturitu. Povede se mu to ? Uvidíte v příští epizodě.\n',	16,	'2022-03-16 09:30:18',	'OPEN'),
+(10,	'Gayming',	'upload/864940198e4c874f063081fdec7c17bc.jpeg',	'Victory royale is gut',	48,	'2022-03-16 10:01:17',	'CLOSED');
+
+SET NAMES utf8mb4;
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `role` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `users` (`id`, `username`, `password`, `email`, `role`) VALUES
+(1,	'Admin',	'$2y$10$ehRbjDw7MPPE3mnVlxpabe4gY9bgfgdNUeZx0lc0kc7dkbxKw/13a',	'admin@ossp.cz',	NULL),
+(2,	'DruhyUser',	'$2y$10$eHkvkpLDVADTXGSLZ9cSI.1x/8LqjO.crgU.i8Cc.i1jjd172GNf6',	'second@ossp.cz',	NULL);

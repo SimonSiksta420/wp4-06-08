@@ -18,6 +18,11 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
 	public function actionShow(int $postId): void
 	{
+	
+	if ($post->status == 'ARCHIVED') {
+		$this->getUser();
+	}
+	
 
 	}
 

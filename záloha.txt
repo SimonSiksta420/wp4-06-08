@@ -32,3 +32,8 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 
 	$this->userFacade->add("Admin", "admin@ossp.cz", "secret");
 	$this->userFacade->add("DruhyUser", "second@ossp.cz", "heslo");
+
+	database:
+	dsn: 'mysql:host=127.0.0.1;dbname=quickstart'
+	user: root
+	password: root

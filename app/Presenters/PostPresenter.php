@@ -4,6 +4,7 @@ namespace App\Presenters;
 
 use App\Model\PostFacade;
 use Nette;
+use Nette\Application\Responses\RedirectResponse;
 use Nette\Application\UI\Form;
 
 final class PostPresenter extends Nette\Application\UI\Presenter
@@ -21,6 +22,11 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 	
 	if ($post->status == 'ARCHIVED') {
 		$this->getUser();
+		$this->redirect('Homepage:');
+		$this->flashMessage('Jsi gay a nemůžeš vidět tento archivovaný příspěvěk');
+	} 
+	else {
+		
 	}
 	
 

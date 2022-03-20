@@ -29,7 +29,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		
 	}
 	
-
 	}
 
 	public function renderShow(int $postId): void

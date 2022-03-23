@@ -17,20 +17,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		$this->facade = $facade;
 	}
 
-	public function actionShow(int $postId): void
-	{
-	
-	if ($post->status == 'ARCHIVED') {
-		$this->getUser();
-		$this->redirect('Homepage:');
-		$this->flashMessage('Jsi gay a nemůžeš vidět tento archivovaný příspěvěk');
-	} 
-	else {
-		
-	}
-	
-	}
-
 	public function renderShow(int $postId): void
 	{
 		$post = $this->facade
@@ -40,6 +26,19 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
 		$this->template->post = $post;
 		$this->template->comments = $this->facade->getComments($postId);
+	}
+
+	public function actionShow(int $postId): void
+	{
+
+		$post = $this->facade
+			->getPostById($postId);
+
+		if (!$this->getUser()->IsLoggedIn() && $post->status == 'ARCHIVED') {
+			$this->flashMessage('Jsi gay a nemůžeš vidět tento archivovaný příspěvěk!');
+			$this->redirect('Homepage:');
+		} else {
+		}
 	}
 
 	protected function createComponentCommentForm(): Form
@@ -63,9 +62,9 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
 	public function commentFormSucceeded(\stdClass $data): void
 	{
-		$postId = $this->getParameter('postId'); 
-				 
-		$this->facade->addComment($postId, $data);		
+		$postId = $this->getParameter('postId');
+
+		$this->facade->addComment($postId, $data);
 
 		$this->flashMessage('Děkuji za komentář', 'success');
 		$this->redirect('this');

@@ -30,9 +30,6 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 
 	public function actionShow(int $postId): void
 	{
-
-		
-
 		if (!$this->getUser()->IsLoggedIn() && $this->facade->getPostById($postId)->status == 'ARCHIVED') {
 			$this->flashMessage('Jsi gay a nemůžeš vidět tento archivovaný příspěvěk!');
 			$this->redirect('Homepage:');

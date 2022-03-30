@@ -22,6 +22,12 @@
 
 <br>
 <br>
+
+<a n:href="like! $post->id,1" class="btn btn-success">Líbí se mi!</a>
+<a n:href="like! $post->id,0" class="btn btn-danger">Nelíbí se mi!</a>
+
+<br>
+<br>
 <br>
 
 <h2> Počet zhlédnutí: </h2>
@@ -29,6 +35,11 @@
 <h4> Zhlédnutí: <div class="views_count">{$post->views_count} </div> </h4>
 
 <br>
+
+<div class="post">{$post->content}
+
+
+</div>
 
 {if ($post->status == 'OPEN') || ($post->status == 'CLOSED' && $user->isLoggedIn())}
 
@@ -57,3 +68,4 @@
 </div>
 
 {if $user->isLoggedIn()}<a n:href="Edit:create">Vytvořit příspěvek</a>{/if}
+

@@ -89,5 +89,29 @@ final class PostFacade
 			->get($postId)
 			->update($data);
 	}
+
+	public function updateRating(int $userId, int $postId, int $like)
+	{
+		$currentRating = $this->database
+		 ->table('rating')
+		 ->get([
+		   'user_id' => $userId,
+		   'post_id' => $postId,
+		 ]);
+
+		 if($currentRating != null) {
+			$this->database
+			->query('UPDATE rating SET like_value = ? WHERE user_id = ? AND post_id = ?', $like, $userId, $postId);
+			
+		 } else {
+			 $this->database
+			 	  ->table('rating')
+				  ->insert([
+					  'user_id' => $userId,
+					  'post_id' => $postId,
+					  'like' => $like
+				  ]);
+		 }
+	}
 }
 

@@ -90,6 +90,21 @@ final class PostFacade
 			->update($data);
 	}
 
+	public function getUserRating(int $postId, int $userId)
+	{
+    	$like = $this->database
+        	->table ('rating')
+        	->where ([
+             	'user_id' => $userId,
+             	'post_id' => $postId,
+			]);
+
+     	if($like->count() == 0) { 
+        	return null;
+    }
+    	return $like->fetch()->like_value;
+	}
+
 	public function updateRating(int $userId, int $postId, int $like)
 	{
 		$currentRating = $this->database

@@ -22,10 +22,12 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		$post = $this->facade
 			->getPostById($postId);
 
+
 		$this->facade->addView($postId);
 
 		$this->template->post = $post;
 		$this->template->comments = $this->facade->getComments($postId);
+		$this->template->like = $this->facade->getUserRating($postId, $this->user->id);
 	}
 
 	public function actionShow(int $postId): void

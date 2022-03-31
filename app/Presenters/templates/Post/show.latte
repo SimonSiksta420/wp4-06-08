@@ -23,8 +23,11 @@
 <br>
 <br>
 
-<a n:href="like! $post->id,1" class="btn btn-success">Líbí se mi!</a>
-<a n:href="like! $post->id,0" class="btn btn-danger">Nelíbí se mi!</a>
+{if $user->isLoggedIn()}
+<a n:href="like! $post->id,1" class="btn btn-{if $like == 0}outline-{/if}success"> Líbí se mi!</a>
+<a n:href="like! $post->id,0" class="btn btn-{if $like == 1}outline-{/if}danger">Nelíbí se mi!</a>
+{/if}
+
 
 <br>
 <br>

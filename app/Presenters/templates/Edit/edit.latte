@@ -4,9 +4,13 @@
 
 {control postForm}
 
+{{snippet content}
+
 {if $post->image == null}
 {php echo "Není dostupný obrázek." }
 
 {else}
 <a n:href="deleteImage! $post->id"> Smazat obrázek </a>
 {/if}
+
+{/snippet}}

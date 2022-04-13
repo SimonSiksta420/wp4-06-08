@@ -2,16 +2,17 @@
 
 <h1>Upravit příspěvek</h1>
 
-{control postForm}
+{snippet content}
 
-{{snippet content}
+{control postForm}
 
 {if $post->image == null}
 {php echo "Není dostupný obrázek." }
 
 {else}
-<a n:href="deleteImage! $post->id"> Smazat obrázek </a>
+<a n:href="deleteImage! $post->id" class="ajax"> Smazat obrázek </a>
 {/if}
 
-{/snippet}}
+{/snippet}
 
+{/block}

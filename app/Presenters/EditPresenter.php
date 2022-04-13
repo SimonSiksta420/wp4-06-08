@@ -97,5 +97,6 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 		$this->facade->editPost($postId, $data);
 		$this->flashMessage('Obrázek byl smazán.');
 		$this->redirect('Post:show', $postId);
+		$this->redrawControl('image');
 	}
 }

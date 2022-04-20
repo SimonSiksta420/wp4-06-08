@@ -51,35 +51,34 @@ final class PostFacade
 	public function getComments(int $postId)
 	{
 		return $this->database
-		->table('comments')
-		->where('post_id', $postId);
-		
+			->table('comments')
+			->where('post_id', $postId);
 	}
 
 	public function editPost(int $postId, array $data)
 	{
 		$post = $this->database
-				->table('posts')
-				->get($postId);
-			$post->update($data);
+			->table('posts')
+			->get($postId);
+		$post->update($data);
 		return $post;
 	}
 
 	public function insertPost(array $data)
 	{
 		$post = $this->database
-		->table('posts')
-		->insert($data);
+			->table('posts')
+			->insert($data);
 		return $post;
 	}
 
 	public function addView(int $postId)
 	{
 		$currentViews = $this->database
-		->table('posts')
-		->get($postId)
-		->views_count;
-			$currentViews++;
+			->table('posts')
+			->get($postId)
+			->views_count;
+		$currentViews++;
 
 		bdump($currentViews);
 		$data['views_count'] = $currentViews;
@@ -92,41 +91,47 @@ final class PostFacade
 
 	public function getUserRating(int $postId, int $userId)
 	{
-    	$like = $this->database
-        	->table ('rating')
-        	->where ([
-             	'user_id' => $userId,
-             	'post_id' => $postId,
+		$like = $this->database
+			->table('rating')
+			->where([
+				'user_id' => $userId,
+				'post_id' => $postId,
 			]);
 
-     	if($like->count() == 0) { 
-        	return null;
-    }
-    	return $like->fetch()->like_value;
+		if ($like->count() == 0) {
+			return null;
+		}
+		return $like->fetch()->like_value;
 	}
 
 	public function updateRating(int $userId, int $postId, int $like)
 	{
 		$currentRating = $this->database
-		 ->table('rating')
-		 ->get([
-		   'user_id' => $userId,
-		   'post_id' => $postId,
-		 ]);
+			->table('rating')
+			->get([
+				'user_id' => $userId,
+				'post_id' => $postId,
+			]);
 
-		 if($currentRating != null) {
+		if ($currentRating != null) {
 			$this->database
-			->query('UPDATE rating SET like_value = ? WHERE user_id = ? AND post_id = ?', $like, $userId, $postId);
-			
-		 } else {
-			 $this->database
-			 	  ->table('rating')
-				  ->insert([
-					  'user_id' => $userId,
-					  'post_id' => $postId,
-					  'like' => $like
-				  ]);
-		 }
+				->query('UPDATE rating SET like_value = ? WHERE user_id = ? AND post_id = ?', $like, $userId, $postId);
+		} else {
+			$this->database
+				->table('rating')
+				->insert([
+					'user_id' => $userId,
+					'post_id' => $postId,
+					'like' => $like
+				]);
+		}
+	}
+
+	public function deletePost(int $postId)
+	{
+		$this->database
+			->table('posts')
+			->get($postId)
+			->delete();
 	}
 }
-

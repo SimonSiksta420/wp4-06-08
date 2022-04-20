@@ -45,6 +45,7 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		
 		$userId = $this->getUser()->getId();
 		$this->facade->updateRating($userId, $postId, $like);
+		$this->redrawControl('like');
 	}
 
 	protected function createComponentCommentForm(): Form

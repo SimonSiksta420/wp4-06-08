@@ -122,7 +122,7 @@ final class PostFacade
 				->insert([
 					'user_id' => $userId,
 					'post_id' => $postId,
-					'like' => $like
+					'like_value' => $like
 				]);
 		}
 	}

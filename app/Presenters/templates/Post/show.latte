@@ -40,12 +40,8 @@
 
 <h4> Zhlédnutí: <div class="views_count">{$post->views_count} </div> </h4>
 
-<br>
-
-<div class="post">{$post->content}
-
-
 </div>
+
 
 {if ($post->status == 'OPEN') || ($post->status == 'CLOSED' && $user->isLoggedIn())}
 
@@ -74,4 +70,5 @@
 </div>
 
 {if $user->isLoggedIn()}<a n:href="Edit:create">Vytvořit příspěvek</a>{/if}
+
 

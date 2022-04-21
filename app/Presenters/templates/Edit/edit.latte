@@ -10,10 +10,14 @@
 {php echo "Není dostupný obrázek." }
 
 {else}
-<a n:href="deleteImage! $post->id" class="ajax"> Smazat obrázek </a>
-<br>
-<a n:href="deletePost! $post->id" class="ajax"> Smazat příspěvek </a>
+
+<img class="img-fluid" src="{$basePath}/{$post->image}">
+
+<p> <a n:href="deleteImage! $post->id" class="ajax"> Smazat obrázek </a> </p>
+
 {/if}
+
+<p> <a n:href="deletePost! $post->id"> Smazat příspěvek </a> </p>
 
 {/snippet}
 

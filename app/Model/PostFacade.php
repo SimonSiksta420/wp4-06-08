@@ -130,8 +130,18 @@ final class PostFacade
 	public function deletePost(int $postId)
 	{
 		$this->database
+			->table('comments')
+			->where('post_id', $postId)
+			->delete();
+
+		$this->database
+			->table('rating')
+			->where('post_id', $postId)
+			->delete();
+
+		$this->database
 			->table('posts')
-			->get($postId)
+			->where('id', $postId)
 			->delete();
 	}
 }

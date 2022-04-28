@@ -76,4 +76,11 @@ final class PostPresenter extends Nette\Application\UI\Presenter
 		$this->flashMessage('Děkuji za komentář', 'success');
 		$this->redirect('this');
 	}
+
+	public function handleDeleteComment(int $commentId): void
+	{
+		$this->facade->deleteComment($commentId);
+		$this->flashMessage('Komentář byl smazán', 'success');
+		$this->redirect('this');
+	}
 }

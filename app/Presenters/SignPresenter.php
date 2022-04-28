@@ -38,4 +38,9 @@ final class SignPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Odhlášení bylo úspěšné.');
         $this->redirect('Homepage:');
     }
+
+    public function registerForm(): void
+    {
+        $this->template->registerForm = $this['registerForm'];
+    }
 }

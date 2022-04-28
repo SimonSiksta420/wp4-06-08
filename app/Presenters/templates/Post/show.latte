@@ -40,9 +40,6 @@
 
 <h4> Zhlédnutí: <div class="views_count">{$post->views_count} </div> </h4>
 
-</div>
-
-
 {if ($post->status == 'OPEN') || ($post->status == 'CLOSED' && $user->isLoggedIn())}
 
 	<h2> Vložte nový Komentář: </h2>
@@ -66,9 +63,16 @@
 		</a></b> napsal:</p>
 
 		<div>{$comment->content}</div>
+
+		<br>
+
+		{if in_array('Admin', $user->roles)}
+		<a n:href="deleteComment! $comment->id">Smazat komentář</a>
+		{/if}
 	{/foreach}
+	
+	
 </div>
 
-{if $user->isLoggedIn()}<a n:href="Edit:create">Vytvořit příspěvek</a>{/if}
 
 

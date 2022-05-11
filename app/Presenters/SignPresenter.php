@@ -39,8 +39,25 @@ final class SignPresenter extends Nette\Application\UI\Presenter
         $this->redirect('Homepage:');
     }
 
-    public function registerForm(): void
+    protected function createComponentSignUpForm(): Form{
+        $form = new Form;
+        $form->addText('username', 'Uživatelské jméno:')
+            ->setRequired('Prosím vyplňte své uživatelské jméno.');
+
+        $form->addPassword('password', 'Heslo:')
+            ->setRequired('Prosím vyplňte své heslo.');
+
+        $form->addSubmit('send', 'Registrovat');
+
+        $form->onSuccess[] = [$this, 'signUpFormSucceeded'];
+        return $form;
+
+    }
+
+    public function signUpFormSucceeded(form $form, \stdClass $data): void
     {
-        $this->template->registerForm = $this['registerForm'];
+    $this->userFacade->addUser($data->username, $data->password);
+    $this->flashMessage('Registrace byla úspěšná.');
+    $this->redirect('Homepage:');
     }
 }

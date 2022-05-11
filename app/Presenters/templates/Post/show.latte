@@ -57,6 +57,7 @@
 <h2> Komentáře: </h2>
 
 <div class="comments">
+	{snippet comments}
 	{foreach $comments as $comment}
 		<p><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">
 			{$comment->name}
@@ -67,9 +68,10 @@
 		<br>
 
 		{if in_array('Admin', $user->roles)}
-		<a n:href="deleteComment! $comment->id">Smazat komentář</a>
+		<a class="ajax" n:href="deleteComment! $comment->id">Smazat komentář</a>
 		{/if}
 	{/foreach}
+	{/snippet}
 	
 	
 </div>

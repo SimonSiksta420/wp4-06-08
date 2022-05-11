@@ -70,7 +70,7 @@ final class UserFacade implements Nette\Security\Authenticator
 	 * Adds new user.
 	 * @throws DuplicateNameException
 	 */
-	public function add(string $username, string $email, string $password): void
+	public function addUser(string $username, string $email, string $password): void
 	{
 		Nette\Utils\Validators::assert($email, 'email');
 		try {
@@ -78,15 +78,11 @@ final class UserFacade implements Nette\Security\Authenticator
 				self::COLUMN_NAME => $username,
 				self::COLUMN_PASSWORD_HASH => $this->passwords->hash($password),
 				self::COLUMN_EMAIL => $email,
+				self::COLUMN_ROLE => 'user',
 			]);
-		} catch (Nette\Database\UniqueConstraintViolationException $e) {
-			throw new DuplicateNameException;
-		}
-	}
-}
-
-
-
-class DuplicateNameException extends \Exception
-{
+		   } 
+		catch (Nette\Database\UniqueConstraintViolationException $e) {
+			throw new \Exception("User '$username' already exists.");
+		} 
+	} 
 }

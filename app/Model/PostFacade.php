@@ -152,4 +152,12 @@ final class PostFacade
 			->where('id', $commentId)
 			->delete();
 	}
+
+	public function getCategories()
+	{
+		return $this->database
+			->table('category')
+			->fetchPairs('id', 'name');
+	}
+
 }

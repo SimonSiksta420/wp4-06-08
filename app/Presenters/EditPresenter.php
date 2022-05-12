@@ -37,6 +37,12 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 
 		$form->addSelect('status', 'Stav:', $statuses)
 			->setDefaultValue('OPEN');
+		
+		$categories = $this->facade->getCategories();
+
+		$form->addSelect('category_id', 'Kategorie:', $categories)
+			->setDefaultValue('2');
+			 
 
 
 		$form->addSubmit('send', 'Uložit a publikovat');

@@ -8,16 +8,15 @@
 		{if ($post->status == 'ARCHIVED' && $user->isLoggedIn()) || ($post->status == 'OPEN' || $post->status == 'CLOSED') }
 			<div class="post col-12 col-md-4 border border-primary rounded-3 pb-3 mb-3 mx-1">
 				<div class="date">{$post->created_at|date:'F j, Y'}</div>
-					<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
-
-			{if $post->image}
+					<h2> <p> <a n:href="Post:show $post->id">{$post->title}</a> </p> </h2>
+			{if $post->image} <p>
     			<img class="img-fluid" src="{$basePath}/{$post->image}">
 			{else}
-    			<img class="img-fluid" src="{$basePath}/upload/no-image.jpg">
+    			<img class="img-fluid" src="{$basePath}/upload/no-image.jpg"> </p>
 			{/if}
 	
-			<div>{$post->content|truncate:256}</div>
-			<br>
+			<p> {$post->content|truncate:256} <p>
+			<p> {$post->category->name} </p>
 			<div class="status">{$post->status} </div>
 				</div>
 			<br>

@@ -2,11 +2,19 @@
 
 namespace App\Presenters;
 
+use App\Model\UserFacade;
 use Nette;
 use Nette\Application\UI\Form;
 
 final class SignPresenter extends Nette\Application\UI\Presenter
 {
+    private UserFacade $userFacade;
+
+	public function __construct(UserFacade $userFacade)
+    {
+        $this->userFacade = $userFacade;
+    }
+
     protected function createComponentSignInForm(): Form
     {
         $form = new Form;
@@ -41,8 +49,12 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 
     protected function createComponentSignUpForm(): Form{
         $form = new Form;
+
         $form->addText('username', 'Uživatelské jméno:')
             ->setRequired('Prosím vyplňte své uživatelské jméno.');
+
+        $form->addEmail('email', 'Email:')
+            ->setRequired('Prosím vyplňte svůj email.');
 
         $form->addPassword('password', 'Heslo:')
             ->setRequired('Prosím vyplňte své heslo.');
@@ -54,10 +66,11 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 
     }
 
-    public function signUpFormSucceeded(form $form, \stdClass $data): void
+    public function signUpFormSucceeded(\stdClass $data): void
     {
-    $this->userFacade->addUser($data->username, $data->password);
+    $this->userFacade->addUser($data->username, $data->email, $data->password);
     $this->flashMessage('Registrace byla úspěšná.');
+    $this->getUser()->login($data->username, $data->password);
     $this->redirect('Homepage:');
     }
 }

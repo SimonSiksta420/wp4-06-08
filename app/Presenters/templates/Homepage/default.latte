@@ -16,7 +16,7 @@
 			{/if}
 	
 			<p> {$post->content|truncate:256} <p>
-			<p> {$post->category->name} </p>
+			<p> <a n:href="Homepage:category $post->category_id"> {$post->category->name} </a> </p>
 			<div class="status">{$post->status} </div>
 				</div>
 			<br>

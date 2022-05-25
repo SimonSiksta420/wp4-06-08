@@ -153,6 +153,13 @@ final class PostFacade
 			->delete();
 	}
 
+	public function getCategories()
+	{
+		return $this->database
+			->table('category')
+			->fetchPairs('id', 'name');
+	}
+
 	public function getPostsByCategoryId(int $categoryId)
 	{
 		return $this->database

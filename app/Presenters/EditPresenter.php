@@ -35,16 +35,14 @@ final class EditPresenter extends Nette\Application\UI\Presenter
 			'ARCHIVED' => 'ARCHIVOVANÝ'
 		];
 
+		$categories = $this->facade->getCategories();
+
 		$form->addSelect('status', 'Stav:', $statuses)
 			->setDefaultValue('OPEN');
-		
-		$categories = $this->facade->getCategories();
 
 		$form->addSelect('category_id', 'Kategorie:', $categories)
 			->setDefaultValue('2');
 			 
-
-
 		$form->addSubmit('send', 'Uložit a publikovat');
 		$form->onSuccess[] = [$this, 'postFormSucceeded'];
 

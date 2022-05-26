@@ -5,12 +5,13 @@ namespace App\Presenters;
 use App\Model\UserFacade;
 use Nette;
 use Nette\Application\UI\Form;
+use Nette\ComponentModel\IComponent;
 
 final class SignPresenter extends Nette\Application\UI\Presenter
 {
     private UserFacade $userFacade;
 
-	public function __construct(UserFacade $userFacade)
+    public function __construct(UserFacade $userFacade)
     {
         $this->userFacade = $userFacade;
     }
@@ -47,7 +48,8 @@ final class SignPresenter extends Nette\Application\UI\Presenter
         $this->redirect('Homepage:');
     }
 
-    protected function createComponentSignUpForm(): Form{
+    protected function createComponentSignUpForm(): Form
+    {
         $form = new Form;
 
         $form->addText('username', 'Uživatelské jméno:')
@@ -63,14 +65,50 @@ final class SignPresenter extends Nette\Application\UI\Presenter
 
         $form->onSuccess[] = [$this, 'signUpFormSucceeded'];
         return $form;
-
     }
 
     public function signUpFormSucceeded(\stdClass $data): void
     {
-    $this->userFacade->addUser($data->username, $data->email, $data->password);
-    $this->flashMessage('Registrace byla úspěšná.');
-    $this->getUser()->login($data->username, $data->password);
-    $this->redirect('Homepage:');
+        $this->userFacade->addUser($data->username, $data->email, $data->password);
+        $this->flashMessage('Registrace byla úspěšná.');
+        $this->getUser()->login($data->username, $data->password);
+        $this->redirect('Homepage:');
+    }
+
+    protected function createComponentChangeUserForm(): Form
+    {
+        $user = $this->getUser()->getIdentity();
+
+        $form = new Form;
+
+        $form->addText('username', 'Uživatelské jméno:')
+            ->setDefaultValue($user->data['username'])
+            ->setRequired('Prosím vyplňte své uživatelské jméno.');
+
+        $form->addEmail('email', 'Email:')
+            ->setDefaultValue($user->data['email'])
+            ->setRequired('Prosím vyplňte svůj email.');
+
+        $form->addPassword('password', 'Heslo:');
+
+        $form->addSubmit('send', 'Změnit');
+
+
+        $form->onSuccess[] = [$this, 'changeUserFormSucceeded'];
+        return $form;
+    }
+
+    public function changeUserFormSucceeded(\stdClass $data): void
+    {
+        bdump($data);
+        $this->userFacade->updateUser($this->getUser()->getId(), $data->username, $data->email, $data->password);
+        $this->flashMessage('Změna účtu byla úspěšná.');
+        if ($data->password != '') {
+            $this->redirect('Sign:out');
+        } else {
+            
+            //$this->getUser()->login($data->username, $this->getUser()->getIdentity()->data['password']);
+            $this->redirect('Sign:out');
+        }
     }
 }

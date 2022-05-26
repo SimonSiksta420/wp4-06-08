@@ -84,5 +84,26 @@ final class UserFacade implements Nette\Security\Authenticator
 		catch (Nette\Database\UniqueConstraintViolationException $e) {
 			throw new \Exception("User '$username' already exists.");
 		} 
-	} 
+	}
+
+	public function updateUser(int $id, string $username, string $email, string $password = ""): void
+	{
+		Nette\Utils\Validators::assert($email, 'email');
+		$data = [
+			self::COLUMN_EMAIL => $email,
+			self::COLUMN_NAME => $username,
+		];
+
+		if ($password !== "") {
+			$data[self::COLUMN_PASSWORD_HASH] = $this->passwords->hash($password);
+		}
+
+		try {
+			$this->database->table(self::TABLE_NAME)->where(self::COLUMN_ID, $id)->update($data); }
+
+		catch (Nette\Database\UniqueConstraintViolationException $e) {
+			throw new \Exception("User '$username' already exists.");
+		} 
+	}
+
 }

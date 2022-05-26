@@ -37,3 +37,5 @@ final class HomepagePresenter extends Nette\Application\UI\Presenter
 	dsn: 'mysql:host=127.0.0.1;dbname=quickstart'
 	user: root
 	password: root
+
+	$2y$10$ehRbjDw7MPPE3mnVlxpabe4gY9bgfgdNUeZx0lc0kc7dkbxKw/13a	
